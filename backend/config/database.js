@@ -1,17 +1,23 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const { Pool } = require('pg');
 
-const dbPath = process.env.DB_PATH || path.join(__dirname, '..', 'database.sqlite');
+// Use environment variable for connection string
+const connectionString = process.env.DATABASE_URL || 'postgresql://localhost:5432/elections';
 
-const db = new sqlite3.Database(dbPath, (err) => {
-    if (err) {
-        console.error('Error connecting to database:', err.message);
-        process.exit(1);
-    }
-    console.log('Connected to SQLite database');
+const pool = new Pool({
+    connectionString: connectionString,
+    ssl: process.env.NODE_ENV === 'production' ? {
+        rejectUnauthorized: false
+    } : false
 });
 
-// Enable foreign keys
-db.run('PRAGMA foreign_keys = ON');
+// Test connection
+pool.on('connect', () => {
+    console.log('Connected to PostgreSQL database');
+});
 
-module.exports = db;
+pool.on('error', (err) => {
+    console.error('Unexpected error on idle PostgreSQL client', err);
+    process.exit(-1);
+});
+
+module.exports = pool;

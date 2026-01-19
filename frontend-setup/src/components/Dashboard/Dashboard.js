@@ -125,16 +125,16 @@ function Dashboard() {
 
             <div className="quick-info">
                 <div className="info-card">
-                    <h3>📅 Important Dates</h3>
+                    <h3>Important Dates</h3>
                     <ul>
-                        <li>Application Deadline: February 28, 2026</li>
-                        <li>Elections: March 1-15, 2026</li>
-                        <li>Results Announcement: March 16, 2026</li>
+                        <li>Application Deadline: January 22, 2026</li>
+                        <li>Elections: January 29, 2026</li>
+                        <li>Summer Elections: May, 2026</li>
                     </ul>
                 </div>
                 
                 <div className="info-card">
-                    <h3>ℹ️ How It Works</h3>
+                    <h3>How It Works</h3>
                     <ol>
                         <li>Browse available positions</li>
                         <li>Submit your application with statement and photo</li>

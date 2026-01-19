@@ -75,7 +75,7 @@ function Login() {
                 </p>
 
                 <div className="demo-credentials">
-                    <small>Admin: admin@zetapsi.com / admin123!</small>
+                    <small></small>
                 </div>
             </div>
         </div>

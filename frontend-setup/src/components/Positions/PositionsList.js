@@ -66,7 +66,7 @@ function PositionsList() {
                     <span className="info-icon">📅</span>
                     <div>
                         <strong>Application Deadline</strong>
-                        <p>February 28, 2026</p>
+                        <p>January 22, 2026</p>
                     </div>
                 </div>
                 <div className="info-item">
