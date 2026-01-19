@@ -1,7 +1,7 @@
 const pool = require('../config/database');
 
 // Cast vote
-exports.vote = async (req, res) => {
+exports.castVote = async (req, res) => {
     const client = await pool.connect();
     
     try {
@@ -141,7 +141,7 @@ exports.hasVoted = async (req, res) => {
 };
 
 // Get user's voting history
-exports.getVotingHistory = async (req, res) => {
+exports.getMyVotes = async (req, res) => {
     try {
         const voterId = req.user.id;
 
