@@ -1,191 +1,183 @@
-const db = require('../config/database');
+const pool = require('../config/database');
 
 // Cast vote
-exports.castVote = (req, res) => {
-    const userId = req.user.id;
-    const { electionId, applicationId } = req.body;
+exports.vote = async (req, res) => {
+    const client = await pool.connect();
+    
+    try {
+        const voterId = req.user.id;
+        const { electionId, applicationId } = req.body;
 
-    if (!electionId || !applicationId) {
-        return res.status(400).json({
-            success: false,
-            message: 'Election ID and Application ID are required'
-        });
-    }
-
-    // Get election info
-    db.get('SELECT * FROM elections WHERE id = ? AND is_active = 1', [electionId], (err, election) => {
-        if (err) {
-            return res.status(500).json({
+        if (!electionId || !applicationId) {
+            return res.status(400).json({
                 success: false,
-                message: 'Database error',
-                error: err.message
+                message: 'Election ID and Application ID are required'
             });
         }
 
+        await client.query('BEGIN');
+
+        // Get election details
+        const electionQuery = 'SELECT * FROM elections WHERE id = $1 AND is_active = 1';
+        const electionResult = await client.query(electionQuery, [electionId]);
+        const election = electionResult.rows[0];
+
         if (!election) {
+            await client.query('ROLLBACK');
             return res.status(404).json({
                 success: false,
                 message: 'Active election not found'
             });
         }
 
+        const currentRound = election.current_round;
+
         // Check if user already voted in this round
-        db.get(
-            'SELECT id FROM votes WHERE election_id = ? AND round_number = ? AND voter_id = ?',
-            [electionId, election.current_round, userId],
-            (err, existingVote) => {
-                if (err) {
-                    return res.status(500).json({
-                        success: false,
-                        message: 'Database error',
-                        error: err.message
-                    });
-                }
+        const checkQuery = 'SELECT id FROM votes WHERE election_id = $1 AND round_number = $2 AND voter_id = $3';
+        const checkResult = await client.query(checkQuery, [electionId, currentRound, voterId]);
 
-                if (existingVote) {
-                    return res.status(400).json({
-                        success: false,
-                        message: 'You have already voted in this round'
-                    });
-                }
-
-                // Verify application exists and is for this position
-                db.get(
-                    'SELECT id FROM applications WHERE id = ? AND position_id = ?',
-                    [applicationId, election.position_id],
-                    (err, application) => {
-                        if (err) {
-                            return res.status(500).json({
-                                success: false,
-                                message: 'Database error',
-                                error: err.message
-                            });
-                        }
-
-                        if (!application) {
-                            return res.status(400).json({
-                                success: false,
-                                message: 'Invalid application for this position'
-                            });
-                        }
-
-                        // Cast vote
-                        const query = `
-                            INSERT INTO votes (election_id, round_number, voter_id, application_id)
-                            VALUES (?, ?, ?, ?)
-                        `;
-
-                        db.run(query, [electionId, election.current_round, userId, applicationId], function(err) {
-                            if (err) {
-                                return res.status(500).json({
-                                    success: false,
-                                    message: 'Failed to cast vote',
-                                    error: err.message
-                                });
-                            }
-
-                            res.json({
-                                success: true,
-                                message: 'Vote cast successfully',
-                                vote: {
-                                    id: this.lastID,
-                                    electionId,
-                                    roundNumber: election.current_round,
-                                    applicationId
-                                }
-                            });
-                        });
-                    }
-                );
-            }
-        );
-    });
-};
-
-// Check if user has voted
-exports.hasVoted = (req, res) => {
-    const userId = req.user.id;
-    const { electionId } = req.params;
-
-    db.get('SELECT current_round FROM elections WHERE id = ?', [electionId], (err, election) => {
-        if (err) {
-            return res.status(500).json({
+        if (checkResult.rows.length > 0) {
+            await client.query('ROLLBACK');
+            return res.status(400).json({
                 success: false,
-                message: 'Database error',
-                error: err.message
+                message: 'You have already voted in this round'
             });
         }
 
-        if (!election) {
+        // Verify application exists and is for the correct position
+        const appQuery = 'SELECT * FROM applications WHERE id = $1 AND position_id = $2';
+        const appResult = await client.query(appQuery, [applicationId, election.position_id]);
+
+        if (appResult.rows.length === 0) {
+            await client.query('ROLLBACK');
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid application for this election'
+            });
+        }
+
+        // Check if candidate already won in a previous round
+        const winnerQuery = 'SELECT id FROM winners WHERE election_id = $1 AND application_id = $2';
+        const winnerResult = await client.query(winnerQuery, [electionId, applicationId]);
+
+        if (winnerResult.rows.length > 0) {
+            await client.query('ROLLBACK');
+            return res.status(400).json({
+                success: false,
+                message: 'This candidate has already won in a previous round'
+            });
+        }
+
+        // Cast vote
+        const voteQuery = `
+            INSERT INTO votes (election_id, round_number, voter_id, application_id)
+            VALUES ($1, $2, $3, $4)
+            RETURNING *
+        `;
+        const voteResult = await client.query(voteQuery, [electionId, currentRound, voterId, applicationId]);
+
+        await client.query('COMMIT');
+
+        res.json({
+            success: true,
+            message: 'Vote cast successfully',
+            vote: {
+                id: voteResult.rows[0].id,
+                electionId: voteResult.rows[0].election_id,
+                roundNumber: voteResult.rows[0].round_number,
+                applicationId: voteResult.rows[0].application_id,
+                votedAt: voteResult.rows[0].voted_at
+            }
+        });
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Vote error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to cast vote',
+            error: error.message
+        });
+    } finally {
+        client.release();
+    }
+};
+
+// Check if user has voted
+exports.hasVoted = async (req, res) => {
+    try {
+        const voterId = req.user.id;
+        const { electionId } = req.params;
+
+        // Get election current round
+        const electionQuery = 'SELECT current_round FROM elections WHERE id = $1';
+        const electionResult = await pool.query(electionQuery, [electionId]);
+
+        if (electionResult.rows.length === 0) {
             return res.status(404).json({
                 success: false,
                 message: 'Election not found'
             });
         }
 
-        db.get(
-            'SELECT id FROM votes WHERE election_id = ? AND round_number = ? AND voter_id = ?',
-            [electionId, election.current_round, userId],
-            (err, vote) => {
-                if (err) {
-                    return res.status(500).json({
-                        success: false,
-                        message: 'Database error',
-                        error: err.message
-                    });
-                }
+        const currentRound = electionResult.rows[0].current_round;
 
-                res.json({
-                    success: true,
-                    hasVoted: !!vote,
-                    roundNumber: election.current_round
-                });
-            }
-        );
-    });
+        // Check if voted in current round
+        const voteQuery = 'SELECT id FROM votes WHERE election_id = $1 AND round_number = $2 AND voter_id = $3';
+        const voteResult = await pool.query(voteQuery, [electionId, currentRound, voterId]);
+
+        res.json({
+            success: true,
+            hasVoted: voteResult.rows.length > 0,
+            roundNumber: currentRound
+        });
+    } catch (error) {
+        console.error('Has voted check error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to check voting status',
+            error: error.message
+        });
+    }
 };
 
 // Get user's voting history
-exports.getMyVotes = (req, res) => {
-    const userId = req.user.id;
+exports.getVotingHistory = async (req, res) => {
+    try {
+        const voterId = req.user.id;
 
-    const query = `
-        SELECT v.*, 
-               e.position_id,
-               p.title as position_title,
-               u.first_name as candidate_first_name,
-               u.last_name as candidate_last_name
-        FROM votes v
-        JOIN elections e ON v.election_id = e.id
-        JOIN positions p ON e.position_id = p.id
-        JOIN applications a ON v.application_id = a.id
-        JOIN users u ON a.user_id = u.id
-        WHERE v.voter_id = ?
-        ORDER BY v.voted_at DESC
-    `;
+        const query = `
+            SELECT v.*, e.position_id, p.title as position_title,
+                   u.first_name, u.last_name
+            FROM votes v
+            JOIN elections e ON v.election_id = e.id
+            JOIN positions p ON e.position_id = p.id
+            JOIN applications a ON v.application_id = a.id
+            JOIN users u ON a.user_id = u.id
+            WHERE v.voter_id = $1
+            ORDER BY v.voted_at DESC
+        `;
 
-    db.all(query, [userId], (err, votes) => {
-        if (err) {
-            return res.status(500).json({
-                success: false,
-                message: 'Failed to fetch voting history',
-                error: err.message
-            });
-        }
-
-        const formatted = votes.map(v => ({
+        const result = await pool.query(query, [voterId]);
+        const votes = result.rows.map(v => ({
             id: v.id,
             electionId: v.election_id,
             positionId: v.position_id,
             positionTitle: v.position_title,
             roundNumber: v.round_number,
-            candidateName: `${v.candidate_first_name} ${v.candidate_last_name}`,
+            candidateName: `${v.first_name} ${v.last_name}`,
             votedAt: v.voted_at
         }));
 
         res.json({
             success: true,
-            votes: formatted
+            votes
         });
-    });
+    } catch (error) {
+        console.error('Get voting history error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch voting history',
+            error: error.message
+        });
+    }
 };
