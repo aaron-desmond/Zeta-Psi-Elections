@@ -361,7 +361,7 @@ exports.startNextRound = async (req, res) => {
 };
 
 // Get election results
-exports.getResults = async (req, res) => {
+exports.getElectionResults = async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -458,5 +458,37 @@ exports.getResults = async (req, res) => {
             message: 'Failed to fetch election results',
             error: error.message
         });
+    }
+};
+
+// Reset all elections (admin only)
+exports.resetAllElections = async (req, res) => {
+    const client = await pool.connect();
+    
+    try {
+        await client.query('BEGIN');
+
+        // Delete all data in order (respecting foreign keys)
+        await client.query('DELETE FROM votes');
+        await client.query('DELETE FROM winners');
+        await client.query('DELETE FROM election_rounds');
+        await client.query('DELETE FROM elections');
+
+        await client.query('COMMIT');
+
+        res.json({
+            success: true,
+            message: 'All elections have been reset'
+        });
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Reset elections error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to reset elections',
+            error: error.message
+        });
+    } finally {
+        client.release();
     }
 };
