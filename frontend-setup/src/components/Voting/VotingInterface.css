@@ -1,0 +1,480 @@
+.voting-interface-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Header Section */
+.voting-header {
+    text-align: center;
+    margin-bottom: 40px;
+    background: rgba(26, 26, 26, 0.9);
+    padding: 40px;
+    border-radius: 16px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.voting-header h1 {
+    font-size: 36px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 15px 0;
+    font-weight: 700;
+}
+
+.election-info {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.seats-info {
+    font-size: 16px;
+    color: #4CAF50;
+    margin: 10px 0;
+    font-weight: 600;
+    display: inline-block;
+    background: rgba(76, 175, 80, 0.2);
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(76, 175, 80, 0.4);
+}
+
+/* Previous Winners Section */
+.previous-winners-section {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.15) 100%);
+    padding: 30px;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    backdrop-filter: blur(10px);
+}
+
+.previous-winners-section h3 {
+    font-size: 22px;
+    color: #FFD700;
+    margin: 0 0 20px 0;
+    font-weight: 700;
+    text-align: center;
+}
+
+.winners-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.winner-chip {
+    background: rgba(26, 26, 26, 0.9);
+    color: #FFD700;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 15px;
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    transition: all 0.3s;
+}
+
+.winner-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+}
+
+/* Candidates List */
+.candidates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.candidate-card {
+    background: rgba(26, 26, 26, 0.9);
+    padding: 35px;
+    border-radius: 16px;
+    border: 3px solid rgba(255, 215, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    backdrop-filter: blur(10px);
+    display: flex;
+    gap: 30px;
+}
+
+.candidate-card:hover {
+    border-color: #FFD700;
+    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+    transform: translateY(-5px);
+}
+
+.candidate-card.selected {
+    border-color: #28a745;
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(26, 26, 26, 0.95) 100%);
+    box-shadow: 0 10px 40px rgba(40, 167, 69, 0.4);
+}
+
+.selected-indicator {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 5px 20px rgba(40, 167, 69, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.candidate-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #FFD700;
+    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
+    flex-shrink: 0;
+}
+
+.candidate-info {
+    flex: 1;
+}
+
+.candidate-info h3 {
+    font-size: 30px;
+    color: #FFD700;
+    margin: 0 0 15px 0;
+    font-weight: 700;
+}
+
+.candidate-terms {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.term-badge {
+    background: rgba(255, 215, 0, 0.2);
+    color: #FFD700;
+    padding: 6px 16px;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+.candidate-statement {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.8;
+    margin: 0;
+    white-space: pre-wrap;
+    font-size: 16px;
+}
+
+.no-candidates {
+    text-align: center;
+    padding: 80px 40px;
+    background: rgba(26, 26, 26, 0.9);
+    border-radius: 16px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 18px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.no-candidates p {
+    margin: 0 0 30px 0;
+    font-size: 20px;
+}
+
+/* Voting Actions */
+.voting-actions {
+    display: flex;
+    gap: 20px;
+    padding-top: 30px;
+    border-top: 2px solid rgba(255, 215, 0, 0.2);
+}
+
+.back-btn,
+.submit-vote-btn {
+    flex: 1;
+    padding: 18px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.back-btn {
+    background: rgba(26, 26, 26, 0.8);
+    color: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.back-btn:hover {
+    border-color: #FFD700;
+    background: rgba(255, 215, 0, 0.1);
+    color: #FFD700;
+}
+
+.submit-vote-btn {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+}
+
+.submit-vote-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.6);
+}
+
+.submit-vote-btn:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Voting Info Box */
+.voting-info {
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.15) 0%, rgba(255, 82, 82, 0.15) 100%);
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 30px;
+    border: 2px solid rgba(220, 53, 69, 0.4);
+    backdrop-filter: blur(10px);
+}
+
+.voting-info p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 15px;
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.voting-info p:first-child {
+    color: #ff5252;
+    font-weight: 600;
+}
+
+.voting-info p:last-child {
+    color: #4CAF50;
+    font-weight: 600;
+}
+
+/* Vote Confirmation Screen */
+.vote-confirmation {
+    text-align: center;
+    padding: 80px 40px;
+    background: rgba(26, 26, 26, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(10px);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.confirmation-icon {
+    display: block;
+    font-size: 100px;
+    margin-bottom: 30px;
+    animation: pop-in 0.5s ease;
+}
+
+@keyframes pop-in {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.vote-confirmation h2 {
+    font-size: 36px;
+    color: #FFD700;
+    margin: 0 0 20px 0;
+    font-weight: 700;
+}
+
+.vote-confirmation p {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.vote-message {
+    background: rgba(76, 175, 80, 0.2);
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid rgba(76, 175, 80, 0.4);
+    margin: 30px 0;
+}
+
+/* Previous Winners Info (in confirmation) */
+.previous-winners-info {
+    background: rgba(255, 215, 0, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    margin: 30px 0;
+    text-align: left;
+}
+
+.previous-winners-info h3 {
+    font-size: 20px;
+    color: #FFD700;
+    margin: 0 0 15px 0;
+    font-weight: 700;
+    text-align: center;
+}
+
+.previous-winners-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.previous-winners-info li {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.previous-winners-info li:last-child {
+    border-bottom: none;
+}
+
+.vote-confirmation .back-btn {
+    padding: 16px 32px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #000000;
+    border: none;
+    margin-top: 20px;
+    display: inline-block;
+    width: auto;
+}
+
+.vote-confirmation .back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+}
+
+/* Loading State */
+.loading {
+    text-align: center;
+    padding: 80px 20px;
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(26, 26, 26, 0.9);
+    border-radius: 16px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.error {
+    text-align: center;
+    padding: 80px 20px;
+    font-size: 22px;
+    color: #dc3545;
+    background: rgba(26, 26, 26, 0.9);
+    border-radius: 16px;
+    border: 2px solid rgba(220, 53, 69, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .voting-header {
+        padding: 30px 25px;
+    }
+
+    .voting-header h1 {
+        font-size: 28px;
+    }
+
+    .candidate-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px;
+    }
+
+    .candidate-photo {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 20px;
+    }
+
+    .candidate-info h3 {
+        font-size: 24px;
+    }
+
+    .candidate-terms {
+        justify-content: center;
+    }
+
+    .voting-actions {
+        flex-direction: column;
+    }
+
+    .selected-indicator {
+        top: 15px;
+        right: 15px;
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+    .vote-confirmation {
+        padding: 60px 30px;
+    }
+
+    .confirmation-icon {
+        font-size: 80px;
+    }
+
+    .vote-confirmation h2 {
+        font-size: 28px;
+    }
+
+    .previous-winners-section {
+        padding: 25px 20px;
+    }
+
+    .winners-chips {
+        gap: 10px;
+    }
+
+    .winner-chip {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .voting-info {
+        padding: 20px;
+    }
+
+    .voting-info p {
+        font-size: 14px;
+    }
+}

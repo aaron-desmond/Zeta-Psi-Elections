@@ -1,0 +1,283 @@
+.bar-graph-container {
+    background: rgba(26, 26, 26, 0.9);
+    padding: 40px;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.bar-graph-container h2 {
+    font-size: 28px;
+    color: #FFD700;
+    margin: 0 0 40px 0;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Remove padding from wrapper since threshold is now inside graph */
+.bar-graph-wrapper {
+    position: relative;
+}
+
+.bar-graph {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    gap: 30px;
+    height: 400px;
+    padding: 30px 60px 30px 20px; /* Extra padding on right for label */
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    position: relative;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+/* Global threshold line - positioned INSIDE bar-graph */
+.global-threshold-line {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    height: 3px;
+    background: #dc3545;
+    box-shadow: 0 0 10px rgba(220, 53, 69, 0.8);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.global-threshold-line::before,
+.global-threshold-line::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background: #dc3545;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.global-threshold-line::before {
+    left: -4px;
+}
+
+.global-threshold-line::after {
+    right: -4px;
+}
+
+.global-threshold-label {
+    position: absolute;
+    right: -55px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #dc3545;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(220, 53, 69, 0.5);
+}
+
+.bar-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 180px;
+}
+
+.bar-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+}
+
+.bar {
+    width: 100%;
+    background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    transition: all 0.5s ease;
+    box-shadow: 0 -5px 20px rgba(255, 215, 0, 0.5);
+    min-height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 15px;
+}
+
+.bar.meets-threshold {
+    background: linear-gradient(180deg, #28a745 0%, #20c997 100%);
+    box-shadow: 0 -5px 20px rgba(40, 167, 69, 0.5);
+}
+
+.bar-value {
+    text-align: center;
+}
+
+.vote-count {
+    font-size: 32px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+.vote-percentage {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+/* Bar Info */
+.bar-info {
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.candidate-photo-small {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #FFD700;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.candidate-name {
+    color: #FFD700;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.threshold-badge {
+    background: #28a745;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-block;
+    box-shadow: 0 2px 10px rgba(40, 167, 69, 0.4);
+}
+
+/* Legend */
+.graph-legend {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 2px solid rgba(255, 215, 0, 0.2);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.legend-color {
+    width: 30px;
+    height: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.legend-color.gold {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+}
+
+.legend-color.green {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.threshold-line-legend {
+    position: relative;
+}
+
+.legend-line {
+    width: 30px;
+    height: 3px;
+    background: #dc3545;
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.6);
+}
+
+.legend-item span {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .bar-graph-wrapper {
+        padding: 0 20px;
+    }
+
+    .bar-graph {
+        height: 350px;
+        gap: 15px;
+        padding: 20px 10px;
+    }
+
+    .bar-column {
+        max-width: 120px;
+    }
+
+    .vote-count {
+        font-size: 24px;
+    }
+
+    .vote-percentage {
+        font-size: 14px;
+    }
+
+    .candidate-photo-small {
+        width: 50px;
+        height: 50px;
+    }
+
+    .candidate-name {
+        font-size: 14px;
+    }
+
+    .global-threshold-label {
+        left: -40px;
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    .global-threshold-line::before {
+        left: 20px;
+    }
+
+    .global-threshold-line::after {
+        right: 20px;
+    }
+
+    .graph-legend {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+}
+
+.bar-empty {
+    background: rgba(255, 215, 0, 0.2);
+    border: 2px dashed rgba(255, 215, 0, 0.4);
+    box-shadow: none;
+}
+
+.bar-empty .vote-count,
+.bar-empty .vote-percentage {
+    color: rgba(255, 215, 0, 0.6);
+}

@@ -1,0 +1,226 @@
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 50px;
+    background: rgba(26, 26, 26, 0.9);
+    padding: 40px;
+    border-radius: 16px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-header h1 {
+    font-size: 42px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 15px 0;
+    font-weight: 700;
+}
+
+.dashboard-subtitle {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.dashboard-card {
+    background: rgba(26, 26, 26, 0.8);
+    padding: 35px;
+    border-radius: 16px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.dashboard-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.dashboard-card:hover::before {
+    opacity: 1;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-8px);
+    border-color: #FFD700;
+    box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+}
+
+.dashboard-card.coming-soon {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: rgba(255, 215, 0, 0.15);
+}
+
+.dashboard-card.coming-soon:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: rgba(255, 215, 0, 0.15);
+}
+
+.card-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #dc3545;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 700;
+    animation: pulse-badge 2s infinite;
+    z-index: 2;
+}
+
+@keyframes pulse-badge {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.card-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-card h3 {
+    font-size: 24px;
+    color: #FFD700;
+    margin: 0 0 12px 0;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-card p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    font-size: 15px;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.coming-soon-badge {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background: rgba(255, 215, 0, 0.2);
+    color: #FFD700;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    display: inline-block;
+}
+
+.quick-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.info-card {
+    background: rgba(26, 26, 26, 0.8);
+    padding: 30px;
+    border-radius: 16px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.info-card h3 {
+    font-size: 22px;
+    color: #FFD700;
+    margin: 0 0 20px 0;
+    font-weight: 700;
+}
+
+.info-card ul,
+.info-card ol {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 2;
+    padding-left: 20px;
+}
+
+.info-card ul li,
+.info-card ol li {
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-header h1 {
+        font-size: 32px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Base styling for all icons */
+.icon-image {
+    width: 300%;
+    height: 300%;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* Makes image white */
+}
+
+/* Override for vote icon - NO filter */
+.icon-image.icon-vote {
+    filter: none;
+}
+
+/* Override for other specific icons if needed */
+.icon-image.icon-run-for-position {
+    width: 250%;
+}
+
+.icon-image.icon-view-candidates {
+    filter: brightness(0) invert(1) hue-rotate(90deg);
+    width: 380%;
+}
+
+.icon-image.icon-my-applications {
+    width: 320%;
+}
