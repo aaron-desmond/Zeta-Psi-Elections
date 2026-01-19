@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const db = require('../config/database');
+const pool = require('../config/database');
 
 // Generate JWT token
 const generateToken = (user) => {
@@ -29,69 +29,46 @@ exports.register = async (req, res) => {
         }
 
         // Check if user already exists
-        db.get('SELECT id FROM users WHERE email = ?', [email], async (err, existingUser) => {
-            if (err) {
-                return res.status(500).json({
-                    success: false,
-                    message: 'Database error',
-                    error: err.message
-                });
-            }
+        const checkQuery = 'SELECT id FROM users WHERE email = $1';
+        const checkResult = await pool.query(checkQuery, [email]);
 
-            if (existingUser) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'User with this email already exists'
-                });
-            }
-
-            // Hash password
-            const hashedPassword = await bcrypt.hash(password, 10);
-
-            // Insert user
-            const query = `
-                INSERT INTO users (email, password, first_name, last_name, is_admin)
-                VALUES (?, ?, ?, ?, 0)
-            `;
-
-            db.run(query, [email, hashedPassword, firstName, lastName], function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        success: false,
-                        message: 'Failed to create user',
-                        error: err.message
-                    });
-                }
-
-                // Get the created user
-                db.get('SELECT * FROM users WHERE id = ?', [this.lastID], (err, user) => {
-                    if (err) {
-                        return res.status(500).json({
-                            success: false,
-                            message: 'User created but failed to retrieve',
-                            error: err.message
-                        });
-                    }
-
-                    // Generate token
-                    const token = generateToken(user);
-
-                    res.status(201).json({
-                        success: true,
-                        message: 'User registered successfully',
-                        token,
-                        user: {
-                            id: user.id,
-                            email: user.email,
-                            firstName: user.first_name,
-                            lastName: user.last_name,
-                            isAdmin: user.is_admin === 1
-                        }
-                    });
-                });
+        if (checkResult.rows.length > 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'User with this email already exists'
             });
+        }
+
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Insert user
+        const insertQuery = `
+            INSERT INTO users (email, password, first_name, last_name, is_admin)
+            VALUES ($1, $2, $3, $4, 0)
+            RETURNING *
+        `;
+
+        const insertResult = await pool.query(insertQuery, [email, hashedPassword, firstName, lastName]);
+        const user = insertResult.rows[0];
+
+        // Generate token
+        const token = generateToken(user);
+
+        res.status(201).json({
+            success: true,
+            message: 'User registered successfully',
+            token,
+            user: {
+                id: user.id,
+                email: user.email,
+                firstName: user.first_name,
+                lastName: user.last_name,
+                isAdmin: user.is_admin === 1
+            }
         });
     } catch (error) {
+        console.error('Registration error:', error);
         res.status(500).json({
             success: false,
             message: 'Server error',
@@ -114,49 +91,44 @@ exports.login = async (req, res) => {
         }
 
         // Find user
-        db.get('SELECT * FROM users WHERE email = ?', [email], async (err, user) => {
-            if (err) {
-                return res.status(500).json({
-                    success: false,
-                    message: 'Database error',
-                    error: err.message
-                });
-            }
+        const query = 'SELECT * FROM users WHERE email = $1';
+        const result = await pool.query(query, [email]);
+        const user = result.rows[0];
 
-            if (!user) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'Invalid credentials'
-                });
-            }
-
-            // Check password
-            const isValidPassword = await bcrypt.compare(password, user.password);
-
-            if (!isValidPassword) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'Invalid credentials'
-                });
-            }
-
-            // Generate token
-            const token = generateToken(user);
-
-            res.json({
-                success: true,
-                message: 'Login successful',
-                token,
-                user: {
-                    id: user.id,
-                    email: user.email,
-                    firstName: user.first_name,
-                    lastName: user.last_name,
-                    isAdmin: user.is_admin === 1
-                }
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid credentials'
             });
+        }
+
+        // Check password
+        const isValidPassword = await bcrypt.compare(password, user.password);
+
+        if (!isValidPassword) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid credentials'
+            });
+        }
+
+        // Generate token
+        const token = generateToken(user);
+
+        res.json({
+            success: true,
+            message: 'Login successful',
+            token,
+            user: {
+                id: user.id,
+                email: user.email,
+                firstName: user.first_name,
+                lastName: user.last_name,
+                isAdmin: user.is_admin === 1
+            }
         });
     } catch (error) {
+        console.error('Login error:', error);
         res.status(500).json({
             success: false,
             message: 'Server error',
@@ -166,15 +138,11 @@ exports.login = async (req, res) => {
 };
 
 // Get current user (verify token)
-exports.getCurrentUser = (req, res) => {
-    db.get('SELECT * FROM users WHERE id = ?', [req.user.id], (err, user) => {
-        if (err) {
-            return res.status(500).json({
-                success: false,
-                message: 'Database error',
-                error: err.message
-            });
-        }
+exports.getCurrentUser = async (req, res) => {
+    try {
+        const query = 'SELECT * FROM users WHERE id = $1';
+        const result = await pool.query(query, [req.user.id]);
+        const user = result.rows[0];
 
         if (!user) {
             return res.status(404).json({
@@ -193,5 +161,12 @@ exports.getCurrentUser = (req, res) => {
                 isAdmin: user.is_admin === 1
             }
         });
-    });
+    } catch (error) {
+        console.error('Get current user error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message
+        });
+    }
 };
