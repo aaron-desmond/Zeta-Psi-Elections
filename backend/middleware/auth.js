@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
-const db = require('../config/database');
+const pool = require('../config/database');
 
 // Protect routes - verify JWT token
-const protect = (req, res, next) => {
+const protect = async (req, res, next) => {
     try {
         // Get token from header
         const authHeader = req.headers.authorization;
@@ -20,37 +20,30 @@ const protect = (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         
         // Get user from database to ensure they still exist
-        db.get(
-            'SELECT id, email, first_name, last_name, is_admin FROM users WHERE id = ?',
-            [decoded.id],
-            (err, user) => {
-                if (err) {
-                    return res.status(500).json({
-                        success: false,
-                        message: 'Database error during authentication'
-                    });
-                }
+        const query = 'SELECT id, email, first_name, last_name, is_admin FROM users WHERE id = $1';
+        const result = await pool.query(query, [decoded.id]);
+        const user = result.rows[0];
 
-                if (!user) {
-                    return res.status(401).json({
-                        success: false,
-                        message: 'User not found'
-                    });
-                }
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
 
-                // Add user info to request
-                req.user = {
-                    id: user.id,
-                    email: user.email,
-                    firstName: user.first_name,
-                    lastName: user.last_name,
-                    isAdmin: user.is_admin === 1
-                };
+        // Add user info to request
+        req.user = {
+            id: user.id,
+            email: user.email,
+            firstName: user.first_name,
+            lastName: user.last_name,
+            isAdmin: user.is_admin === 1
+        };
 
-                next();
-            }
-        );
+        next();
     } catch (error) {
+        console.error('Auth middleware error:', error);
+        
         if (error.name === 'JsonWebTokenError') {
             return res.status(401).json({ 
                 success: false, 
@@ -65,7 +58,8 @@ const protect = (req, res, next) => {
         }
         return res.status(500).json({ 
             success: false, 
-            message: 'Server error during authentication' 
+            message: 'Server error during authentication',
+            error: error.message
         });
     }
 };
