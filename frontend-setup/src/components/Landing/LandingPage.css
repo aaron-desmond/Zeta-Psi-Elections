@@ -285,12 +285,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 120px;
+    height: 220px;
 }
 
 .feature-icon img {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     object-fit: contain;
     transition: all 0.3s ease;
 }
@@ -541,20 +541,20 @@
 
     /* Mobile image sizing */
     .card-icon {
-        height: 100px;
+        height: 160px;
     }
 
     .card-icon img {
-        width: 80px;
-        height: 80px;
+        width: 150px;
+        height: 150px;
     }
 
     .feature-icon {
-        height: 100px;
+        height: 160px;
     }
 
     .feature-icon img {
-        width: 80px;
-        height: 80px;
+        width: 150px;
+        height: 150px;
     }
 }
