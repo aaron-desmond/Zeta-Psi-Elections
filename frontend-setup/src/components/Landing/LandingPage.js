@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import liveResultsIcon from '../../Images/Landing_Live_Results_Image.png';
 import secureIcon from '../../Images/Landing_Secure_Image.png';
 import fastSetupIcon from '../../Images/Landing_Fast_Setup_Image.png';
-import multiRoundVotingIcon from '../../Images/Landing_Multi_Round_Voting/Image.png';
+import multiRoundVotingIcon from '../../Images/Landing_Multi_Round_Voting_Image.png';
 import easyApplicationsIcon from '../../Images/Landing_Easy_Applications_Image.png';
 import organizedPlatformIcon from '../../Images/Landing_Organized_Platform_Image.png';
 import adminDashboardIcon from '../../Images/Landing_Admin_Dashboard_Image.png';
