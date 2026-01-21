@@ -207,8 +207,22 @@
 }
 
 .card-icon {
-    font-size: 2.5rem;
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+}
+
+.card-icon img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
+.visual-card:hover .card-icon img {
+    transform: scale(1.1);
 }
 
 .card-title {
@@ -267,8 +281,22 @@
 }
 
 .feature-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+}
+
+.feature-icon img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon img {
+    transform: scale(1.1);
 }
 
 .feature-card h3 {
@@ -509,5 +537,24 @@
 
     .logo-icon {
         font-size: 28px;
+    }
+
+    /* Mobile image sizing */
+    .card-icon {
+        height: 100px;
+    }
+
+    .card-icon img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .feature-icon {
+        height: 100px;
+    }
+
+    .feature-icon img {
+        width: 80px;
+        height: 80px;
     }
 }
