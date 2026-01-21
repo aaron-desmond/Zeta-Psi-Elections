@@ -1,6 +1,6 @@
 .landing-page {
     min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
     color: #fff;
 }
 
@@ -10,20 +10,35 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 5%;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
+    border-bottom: 3px solid #FFD700;
 }
 
 .nav-logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 12px;
     font-size: 1.5rem;
     font-weight: 700;
 }
 
 .logo-icon {
-    font-size: 2rem;
+    font-size: 36px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: Georgia, serif;
+    letter-spacing: 2px;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFD700;
+    letter-spacing: 1px;
 }
 
 .nav-actions {
@@ -43,28 +58,28 @@
 
 .nav-btn.login {
     background: transparent;
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #FFD700;
+    border: 2px solid #FFD700;
 }
 
 .nav-btn.login:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: white;
+    background: rgba(255, 215, 0, 0.1);
 }
 
 .nav-btn.register {
-    background: white;
-    color: #667eea;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #000000;
+    border: none;
 }
 
 .nav-btn.register:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
 }
 
 /* Hero Section */
 .hero {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 4rem 5%;
     display: grid;
@@ -83,10 +98,11 @@
     font-weight: 800;
     line-height: 1.2;
     margin-bottom: 1.5rem;
+    color: #ffffff;
 }
 
 .gradient-text {
-    background: linear-gradient(90deg, #fff 0%, #f0f0ff 100%);
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -95,8 +111,9 @@
 .hero-subtitle {
     font-size: 1.25rem;
     line-height: 1.6;
-    opacity: 0.9;
+    opacity: 0.8;
     margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .hero-actions {
@@ -118,23 +135,23 @@
 }
 
 .cta-btn.primary {
-    background: white;
-    color: #667eea;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #000000;
 }
 
 .cta-btn.primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 30px rgba(255, 215, 0, 0.4);
 }
 
 .cta-btn.secondary {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 215, 0, 0.1);
+    color: #FFD700;
+    border: 2px solid #FFD700;
 }
 
 .cta-btn.secondary:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 215, 0, 0.2);
 }
 
 .cta-btn.large {
@@ -159,18 +176,19 @@
 }
 
 .visual-card {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(26, 26, 26, 0.8);
     backdrop-filter: blur(10px);
     padding: 2rem;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 215, 0, 0.3);
     transition: all 0.3s ease;
     animation: float 3s ease-in-out infinite;
 }
 
 .visual-card:hover {
     transform: translateY(-10px);
-    background: rgba(255, 255, 255, 0.25);
+    border-color: #FFD700;
+    box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
 }
 
 .card-1 {
@@ -197,18 +215,22 @@
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    color: #FFD700;
 }
 
 .card-desc {
-    opacity: 0.8;
+    opacity: 0.7;
     font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 /* Features Section */
 .features {
-    background: white;
-    color: #333;
+    background: rgba(26, 26, 26, 0.5);
+    backdrop-filter: blur(10px);
     padding: 6rem 5%;
+    border-top: 2px solid rgba(255, 215, 0, 0.2);
+    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
 }
 
 .section-title {
@@ -216,11 +238,14 @@
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 3rem;
-    color: #667eea;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .features-grid {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -228,17 +253,17 @@
 }
 
 .feature-card {
-    background: #f8f9ff;
+    background: rgba(26, 26, 26, 0.8);
     padding: 2rem;
     border-radius: 16px;
-    border: 2px solid transparent;
+    border: 2px solid rgba(255, 215, 0, 0.2);
     transition: all 0.3s ease;
 }
 
 .feature-card:hover {
-    border-color: #667eea;
+    border-color: #FFD700;
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
 }
 
 .feature-icon {
@@ -250,23 +275,22 @@
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: #667eea;
+    color: #FFD700;
 }
 
 .feature-card p {
-    color: #666;
+    color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
 }
 
 /* How It Works */
 .how-it-works {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
     padding: 6rem 5%;
 }
 
 .steps {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -277,18 +301,18 @@
 .step {
     flex: 1;
     text-align: center;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(26, 26, 26, 0.8);
     backdrop-filter: blur(10px);
     padding: 2rem;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 215, 0, 0.2);
 }
 
 .step-number {
     width: 50px;
     height: 50px;
-    background: white;
-    color: #667eea;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #000000;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -301,24 +325,28 @@
 .step h3 {
     font-size: 1.25rem;
     margin-bottom: 0.75rem;
+    color: #FFD700;
 }
 
 .step p {
-    opacity: 0.9;
+    opacity: 0.8;
     line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .step-arrow {
     font-size: 2rem;
+    color: #FFD700;
     opacity: 0.5;
     flex-shrink: 0;
 }
 
 /* CTA Section */
 .cta-section {
-    background: white;
-    color: #333;
+    background: rgba(26, 26, 26, 0.5);
+    backdrop-filter: blur(10px);
     padding: 6rem 5%;
+    border-top: 2px solid rgba(255, 215, 0, 0.2);
 }
 
 .cta-content {
@@ -330,25 +358,29 @@
 .cta-content h2 {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #667eea;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 1rem;
 }
 
 .cta-content p {
     font-size: 1.25rem;
-    color: #666;
+    color: rgba(255, 255, 255, 0.7);
     margin-bottom: 2rem;
 }
 
 /* Footer */
 .landing-footer {
-    background: #1a1a2e;
+    background: #000000;
     color: white;
     padding: 3rem 5%;
+    border-top: 3px solid #FFD700;
 }
 
 .footer-content {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     text-align: center;
 }
@@ -357,15 +389,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 12px;
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
 }
 
+.footer-logo .logo-icon {
+    font-size: 36px;
+}
+
+.footer-logo .logo-text {
+    font-size: 24px;
+}
+
 .footer-text {
     opacity: 0.7;
     margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .footer-links {
@@ -377,11 +418,12 @@
 .footer-link {
     background: transparent;
     border: none;
-    color: white;
+    color: #FFD700;
     font-size: 1rem;
     cursor: pointer;
-    opacity: 0.7;
+    opacity: 0.8;
     transition: opacity 0.3s ease;
+    font-weight: 600;
 }
 
 .footer-link:hover {
@@ -459,5 +501,13 @@
     .nav-actions {
         flex-direction: column;
         gap: 0.5rem;
+    }
+
+    .logo-text {
+        font-size: 18px;
+    }
+
+    .logo-icon {
+        font-size: 28px;
     }
 }
