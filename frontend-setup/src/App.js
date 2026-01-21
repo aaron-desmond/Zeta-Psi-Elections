@@ -17,6 +17,7 @@ import StartElections from './components/Admin/StartElections';
 import LiveResults from './components/Admin/LiveResults'; 
 import VotingDashboard from './components/Voting/VotingDashboard';
 import VotingInterface from './components/Voting/VotingInterface'; 
+import LandingPage from './components/Landing/LandingPage';
 import './App.css';
 
 // Protected Route wrapper
@@ -46,11 +47,14 @@ function AppRoutes() {
         <>
             {currentUser && <Navigation />}
             <Routes>
+                <Route path="/" element={
+                    currentUser ? <Navigate to="/dashboard" /> : <LandingPage />
+                } />
                 <Route path="/login" element={
-                    currentUser ? <Navigate to="/dashboard" /> : <Login />
+                    <Login />
                 } />
                 <Route path="/register" element={
-                    currentUser ? <Navigate to="/dashboard" /> : <Register />
+                    <Register />
                 } />
                 <Route path="/dashboard" element={
                     <ProtectedRoute>
@@ -127,7 +131,6 @@ function AppRoutes() {
                         <VotingInterface />
                     </ProtectedRoute>
                 } />
-                <Route path="/" element={<Navigate to="/login" />} />
             </Routes>
         </>
     );
