@@ -114,7 +114,7 @@ function LandingPage() {
                     </div>
 
                     <div className="feature-card">
-                        <div className="feature-icon">
+                        <div className="feature-icon-special">
                             <img src={adminDashboardIcon} alt="🏛️" />
                         </div>
                         <h3>Admin Dashboard</h3>
@@ -122,7 +122,7 @@ function LandingPage() {
                     </div>
 
                     <div className="feature-card">
-                        <div className="feature-icon">
+                        <div className="feature-icon-special">
                             <img src={transparentProcessIcon} alt="✅" />
                         </div>
                         <h3>Transparent Process</h3>
