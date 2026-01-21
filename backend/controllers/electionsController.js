@@ -469,16 +469,21 @@ exports.resetAllElections = async (req, res) => {
         await client.query('BEGIN');
 
         // Delete all data in order (respecting foreign keys)
+        // First delete dependent data
         await client.query('DELETE FROM votes');
         await client.query('DELETE FROM winners');
         await client.query('DELETE FROM election_rounds');
+        await client.query('DELETE FROM application_terms');
+        
+        // Then delete parent data
         await client.query('DELETE FROM elections');
+        await client.query('DELETE FROM applications');
 
         await client.query('COMMIT');
 
         res.json({
             success: true,
-            message: 'All elections have been reset'
+            message: 'All elections, applications, and votes have been reset'
         });
     } catch (error) {
         await client.query('ROLLBACK');
