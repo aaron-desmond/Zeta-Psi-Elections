@@ -4,11 +4,11 @@ A modern, secure election management system designed for fraternity chapters. Bu
 
 ![Landing Page](screenshots/Landing.png)
 
-## 🎯 Overview
+## Overview
 
 Zeta Psi Elections streamlines the executive election process for fraternity chapters by providing a comprehensive platform for position management, candidate applications, and secure voting with live result tracking.
 
-## ✨ Key Features
+## Key Features
 
 ### Election Management
 - **Multi-Round Voting System** - Automatic runoff elections when no candidate reaches the 2/3 majority threshold
@@ -29,7 +29,7 @@ Zeta Psi Elections streamlines the executive election process for fraternity cha
 
 ![Dashboard](screenshots/dashboard.png)
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Frontend
 - **React** 18.x - UI framework
@@ -52,13 +52,13 @@ Zeta Psi Elections streamlines the executive election process for fraternity cha
 
 ![Admin Dashboard](screenshots/admin_dashboard.png)
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Node.js 16.x or higher
 - npm or yarn
 - PostgreSQL 12.x or higher (for local development)
 
-## 🚀 Installation
+## Installation
 
 ### 1. Clone the Repository
 
@@ -125,7 +125,7 @@ The application will open at `http://localhost:3000`
 
 ![Voting Interface](screenshots/voting.png)
 
-## 📦 Deployment
+## Deployment
 
 ### Backend (Render)
 
@@ -166,7 +166,7 @@ The application will open at `http://localhost:3000`
 
 ![Live Results](screenshots/final_results_multi.png)
 
-## 📖 Usage
+## Usage
 
 ### For Members
 
@@ -185,7 +185,7 @@ The application will open at `http://localhost:3000`
 
 ![Candidate Applications](screenshots/application.png)
 
-## 🔐 Security Features
+## Security Features
 
 - **Password Hashing** - Bcrypt with salt rounds
 - **JWT Authentication** - Secure token-based sessions
@@ -194,7 +194,7 @@ The application will open at `http://localhost:3000`
 - **SQL Injection Prevention** - Parameterized queries
 - **CORS Configuration** - Restricted cross-origin requests
 
-## 📊 Database Schema
+## Database Schema
 
 ### Core Tables
 
@@ -213,7 +213,7 @@ The application will open at `http://localhost:3000`
 - Multiple rounds per election
 - Winner exclusion across rounds
 
-## 🎨 Screenshots
+## Screenshots
 
 ### Landing Page
 ![Landing Page Full](screenshots/landing-full.png)
@@ -233,7 +233,7 @@ The application will open at `http://localhost:3000`
 ### Results Dashboard
 ![Results](screenshots/live_results.png)
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -260,7 +260,7 @@ After deployment, create an admin account:
 3. Run: `UPDATE users SET is_admin = 1 WHERE email = 'admin@example.com';`
 4. Log out and back in to see admin features
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please follow these steps:
 
@@ -270,24 +270,24 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Built for Zeta Psi fraternity chapters
 - Designed to facilitate transparent, democratic elections
 - Inspired by the need for modern, accessible voting systems
 
-## 📧 Contact
+## Contact
 
 **Project Maintainer:** Your Name
 
 - Email: adesmond2024@gmail.com
 - GitHub: [@aaron-desmond](https://github.com/aaron-desmond)
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - [ ] Chapter system for multi-organization support
 - [ ] Email notifications for election events
@@ -299,6 +299,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ for the Brotherhood**
-
-*Zeta Psi - Psi Epsilon Chapter*
+**Built for Zeta Psi - Psi Epsilon Chapter***

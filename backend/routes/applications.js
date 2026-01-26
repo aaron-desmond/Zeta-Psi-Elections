@@ -39,6 +39,6 @@ router.put('/:id', protect, upload.single('photo'), applicationsController.updat
 // @route   DELETE /api/applications/:id
 // @desc    Delete application
 // @access  Private (own application) or Admin
-router.delete('/:id', protect, applicationsController.deleteApplication);
+router.delete('/:id', protect, admin, applicationsController.deleteApplication);
 
 module.exports = router;
