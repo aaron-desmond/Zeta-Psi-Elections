@@ -63,7 +63,7 @@ Zeta Psi Elections streamlines the executive election process for fraternity cha
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/zeta-psi-elections.git
+git clone https://github.com/aaron-desmond/zeta-psi-elections.git
 cd zeta-psi-elections
 ```
 
